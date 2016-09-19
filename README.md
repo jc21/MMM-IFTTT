@@ -120,12 +120,12 @@ Action fields explained:
         <tr>
             <td>Body</td>
             <td>The notification content, explained below</td>
-            <td><code>{
+            <td><pre><code>{
     "message": "<<<{{From}}>>> tagged you in a Photo",
     "displaySeconds": 45,
     "size": "large",
     "lightSequence": "blue-pulse"
-}</code></td>
+}</code></pre></td>
         </tr>
     </tbody>
 </table>
