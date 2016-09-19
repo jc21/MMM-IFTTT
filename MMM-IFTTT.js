@@ -42,6 +42,7 @@ Module.register('MMM-IFTTT',{
 
             this.currentNotification = payload;
             this.updateDom(fadeSpeed);
+            this.sendNotification('SCREEN_WAKEUP', true);
         }
     },
 
