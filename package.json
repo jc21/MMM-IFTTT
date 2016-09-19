@@ -1,0 +1,17 @@
+{
+  "name": "MMM-IFTTT",
+  "version": "1.1.0",
+  "description": "IFTTT Integration for Magic Mirror",
+  "keywords": [
+    "magic mirror",
+    "smart mirror",
+    "IFTTT",
+    "module"
+  ],
+  "author": "Jamie Curnow",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^4.7.0",
+    "body-parser": "latest"
+  }
+}
