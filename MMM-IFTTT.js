@@ -7,7 +7,8 @@ Module.register('MMM-IFTTT',{
      */
     defaults: {
         displaySeconds: 60,
-        fadeSpeed: 3000
+        fadeSpeed: 3000,
+        size: 'large'
     },
 
     /**
@@ -25,6 +26,7 @@ Module.register('MMM-IFTTT',{
      */
     start: function() {
         Log.info('[' + this.name + '] Starting');
+        this.sendSocketNotification('START', {message: 'start connection'});
     },
 
     /**
@@ -33,8 +35,9 @@ Module.register('MMM-IFTTT',{
      */
     socketNotificationReceived: function(notification, payload) {
         if (notification === 'IFTTT_NOTIFICATION') {
+            var fadeSpeed = this.currentNotification.fadeSpeed || this.config.fadeSpeed;
             this.currentNotification = payload;
-            this.updateDom(this.config.fadeSpeed);
+            this.updateDom(fadeSpeed);
         }
     },
 
@@ -58,16 +61,18 @@ Module.register('MMM-IFTTT',{
 
             // Message
             var display_ms = (this.currentNotification.displaySeconds || this.defaults.displaySeconds) * 1000;
-            var self = this;
+            var fadeSpeed  = this.currentNotification.fadeSpeed || this.config.fadeSpeed;
+            var self       = this;
+
             this.currentTimeout = setTimeout(function () {
                 self.currentNotification = null;
                 self.currentTimeout = null;
-                self.updateDom(self.config.fadeSpeed);
+                self.updateDom(fadeSpeed);
             }, display_ms);
         }
 
         var wrapper = document.createElement('div');
-        wrapper.className = 'thin xlarge bright';
+        wrapper.className = 'thin bright ' + this.config.size;
         wrapper.appendChild(document.createTextNode(message));
 
         return wrapper;

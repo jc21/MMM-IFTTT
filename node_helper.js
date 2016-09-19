@@ -28,6 +28,13 @@ module.exports = NodeHelper.create({
                 type: 'integer',
                 minimum: 1
             },
+            size: {
+                type: 'string'
+            },
+            fadeSpeed: {
+                type: 'integer',
+                minimum: 1
+            },
             lightSequence: {
                 type: 'string',
                 minLength: 1,
