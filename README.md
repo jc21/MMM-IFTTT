@@ -49,19 +49,19 @@ modules: [
     <tbody>
         <tr>
             <td><code>displaySeconds</code></td>
-            <td>Integer<td>
+            <td>Integer</td>
             <td><code>60</code></td>
             <td>Number of seconds to show a notification for</td>
         </tr>
         <tr>
             <td><code>fadeSpeed</code></td>
-            <td>Integer<td>
+            <td>Integer</td>
             <td><code>3000</code></td>
             <td>Milliseconds fade transition speed</td>
         </tr>
         <tr>
             <td><code>size</code></td>
-            <td>String<td>
+            <td>String</td>
             <td><code>large</code></td>
             <td>Text size, options are: small, medium, large, xlarge</td>
         </tr>
@@ -81,7 +81,7 @@ I'm not going to go into detail here, there are plenty of [Google results](https
 You will need to forward any port you nominate, to the local IP of your Magic Mirror on port 8080.
 
 You will also need to set up a dynamic DNS hostname for your home network, I'm a [Duckdns](https://www.duckdns.org/)
- fan personally.
+ fan personally. Atlernatively you could look into a http forward solution like [ngrok](https://ngrok.com/). 
 
 
 ### IFTTT Maker Recipes
@@ -104,22 +104,22 @@ Action fields explained:
     <tbody>
         <tr>
             <td>URL</td>
-            <td>Notification endpoint<td>
+            <td>Notification endpoint</td>
             <td>http://yourhouse.duckdns.org:8080/IFTTT</td>
         </tr>
         <tr>
             <td>Method</td>
-            <td>HTTP Method, MUST be POST<td>
+            <td>HTTP Method, MUST be POST</td>
             <td>POST</td>
         </tr>
         <tr>
             <td>Content Type</td>
-            <td>How the data is sent<td>
+            <td>How the data is sent</td>
             <td>application/json</td>
         </tr>
         <tr>
             <td>Body</td>
-            <td>The notification content, explained below<td>
+            <td>The notification content, explained below</td>
             <td><code>{
     "message": "<<<{{From}}>>> tagged you in a Photo",
     "displaySeconds": 45,
@@ -130,7 +130,7 @@ Action fields explained:
     </tbody>
 </table>
 
-The notification JSON MUST contain the `message` item. If it doesn't, the endpoint will return a 400 error.
+The notification body JSON MUST contain the `message` item. If it doesn't, the endpoint will return a 400 error.
  All of the configuration options can also be passed with the JSON, which will override the config for
  that recipe only.
 
@@ -138,8 +138,9 @@ If you also use the [MMM-PiLights](https://github.com/jc21/MMM-PiLights) module,
  for the recipe.
 
 The `<<<{{From}}>>>` in the example above is a IFTTT wildcard field that you select in the Body section
- of the action. You can create any sentence you like that incorporates any wildcard. These fields should
- be surrounded in `<<<` and `>>>` strings in order for the field to be escaped properly.
+ of the action. You can create any message you like that incorporates any wildcard. Stay away from fields that may
+ contain HTML or links, they won't display well. These fields should be surrounded in `<<<` and `>>>` strings in
+ order for the field to be escaped properly.
 
 
 ## Testing the Mirror Endpoint
@@ -147,5 +148,5 @@ The `<<<{{From}}>>>` in the example above is a IFTTT wildcard field that you sel
 ```bash
 curl -X POST -H "Content-Type: application/json" \
     -d '{"message": "Your pizza is ready!"}' \
-    "http://magicmirror:8080/IFTTT"
+    "http://yourhouse.duckdns.org:8080/IFTTT"
 ```
