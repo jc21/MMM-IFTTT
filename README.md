@@ -1,6 +1,8 @@
 # MMM-IFTTT
 [MagicMirror](https://magicmirror.builders/) Module for [IFTTT Maker](https://ifttt.com/maker) Web Based Notifications
 
+![Screenshot](screenshot.png)
+
 This module is intended to display immediate notifications of events from If-This-Then-That channels.
  Notifications will show for a default of 60 seconds before disappearing. There is no on-screen history
  of events.

@@ -35,7 +35,11 @@ Module.register('MMM-IFTTT',{
      */
     socketNotificationReceived: function(notification, payload) {
         if (notification === 'IFTTT_NOTIFICATION') {
-            var fadeSpeed = this.currentNotification.fadeSpeed || this.config.fadeSpeed;
+            var fadeSpeed = this.config.fadeSpeed;
+            if (this.currentNotification && typeof this.currentNotification.fadeSpeed !== 'undefined') {
+                fadeSpeed = this.currentNotification.fadeSpeed;
+            }
+
             this.currentNotification = payload;
             this.updateDom(fadeSpeed);
         }
