@@ -7,7 +7,7 @@ This module is intended to display immediate notifications of events from If-Thi
  Notifications will show for a default of 60 seconds before disappearing. There is no on-screen history
  of events.
  
-These events will eventually integrate with the [MMM-PiLights](https://github.com/jc21/MMM-PiLights) module to enable showing LED light strip
+These events can also integrate with the [MMM-PiLights](https://github.com/jc21/MMM-PiLights) module to enable showing LED light strip
  sequences along side the on-screen notification messages.
 
 

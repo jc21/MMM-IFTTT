@@ -26,7 +26,7 @@ Module.register('MMM-IFTTT',{
      */
     start: function() {
         Log.info('[' + this.name + '] Starting');
-        this.sendSocketNotification('START', {message: 'start connection'});
+        this.sendSocketNotification('START', true);
     },
 
     /**
