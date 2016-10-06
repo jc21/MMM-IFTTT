@@ -4,11 +4,8 @@
 ![Screenshot](screenshot.png)
 
 This module is intended to display immediate notifications of events from If-This-Then-That channels.
- Notifications will show for a default of 60 seconds before disappearing. There is no on-screen history
- of events.
- 
-These events can also integrate with the [MMM-PiLights](https://github.com/jc21/MMM-PiLights) module to enable showing LED light strip
- sequences along side the on-screen notification messages.
+Notifications will show for a default of 60 seconds before disappearing. There is no on-screen history
+of events.
 
 
 ## Module installation
@@ -125,8 +122,7 @@ Action fields explained:
             <td><pre><code>{
     "message": "<<<{{From}}>>> tagged you in a Photo",
     "displaySeconds": 45,
-    "size": "large",
-    "lightSequence": "blue-pulse"
+    "size": "large"
 }</code></pre></td>
         </tr>
     </tbody>
@@ -136,13 +132,77 @@ The notification body JSON MUST contain the `message` item. If it doesn't, the e
  All of the configuration options can also be passed with the JSON, which will override the config for
  that recipe only.
 
-If you also use the [MMM-PiLights](https://github.com/jc21/MMM-PiLights) module, you can specify a `lightSequence`
- for the recipe.
-
 The `<<<{{From}}>>>` in the example above is a IFTTT wildcard field that you select in the Body section
  of the action. You can create any message you like that incorporates any wildcard. Stay away from fields that may
  contain HTML or links, they won't display well. These fields should be surrounded in `<<<` and `>>>` strings in
  order for the field to be escaped properly.
+
+## Using additional modules
+
+This module will send out notifications to other supported modules, if those options are included in the notification JSON.
+The supported modules are:
+
+#### [MMM-Pir-Sensor](https://github.com/paviro/MMM-PIR-Sensor)
+
+IFTTT Module will automatically tell the Pir Sensor module to wakeup the monitor when a notification is received. No addition setup is required.
+
+
+#### [MMM-PiLights](https://github.com/jc21/MMM-PiLights)
+
+This additional module can display light sequences using a LED strip. An example of a notification that includes PiLights sequence:
+
+```json
+{
+    "message": "<<<{{From}}>>> tagged you in a Photo",
+    "displaySeconds": 45,
+    "size": "large",
+    "pilights": "blue-pulse"
+}
+```
+
+Or with iterations:
+
+```json
+{
+    "message": "<<<{{From}}>>> tagged you in a Photo",
+    "displaySeconds": 45,
+    "size": "large",
+    "pilights": {
+        "sequence": "blue-pulse",
+        "iterations": 2
+    }
+}
+```
+
+
+#### [MMM-Sounds](https://github.com/jc21/MMM-Sounds)
+
+This additional module can play audio sounds if your mirror supports it. An example of a notification that would play a Sound:
+
+```json
+{
+    "message": "<<<{{From}}>>> tagged you in a Photo",
+    "displaySeconds": 45,
+    "size": "large",
+    "sound": "wobble.wav"
+}
+```
+
+Or with a delay:
+
+```json
+{
+    "message": "<<<{{From}}>>> tagged you in a Photo",
+    "displaySeconds": 45,
+    "size": "large",
+    "sound": {
+        "sound": "wobble.wav",
+        "delay": 1000
+    }
+}
+```
+
+You may want to use the delay approach to manually align the sound you're using with the light sequence, or to time the wakeup of the screen as well.
 
 
 ## Testing the Mirror Endpoint

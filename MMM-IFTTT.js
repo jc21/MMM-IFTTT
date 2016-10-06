@@ -55,8 +55,13 @@ Module.register('MMM-IFTTT',{
             message = this.currentNotification.message;
 
             // Talk to the PiLights Module
-            if (typeof this.currentNotification.lightSequence !== 'undefined') {
-                this.sendNotification('PILIGHTS_SEQUENCE', this.currentNotification.lightSequence);
+            if (typeof this.currentNotification.pilights !== 'undefined') {
+                this.sendNotification('PILIGHTS_SEQUENCE', this.currentNotification.pilights);
+            }
+
+            // Talk to the Sounds Module
+            if (typeof this.currentNotification.sound !== 'undefined') {
+                this.sendNotification('PLAY_SOUND', this.currentNotification.sound);
             }
 
             // Set timeout to hide this soon, but first clear the existing timeout
@@ -67,12 +72,11 @@ Module.register('MMM-IFTTT',{
             // Message
             var display_ms = (this.currentNotification.displaySeconds || this.defaults.displaySeconds) * 1000;
             var fadeSpeed  = this.currentNotification.fadeSpeed || this.config.fadeSpeed;
-            var self       = this;
 
-            this.currentTimeout = setTimeout(function () {
-                self.currentNotification = null;
-                self.currentTimeout = null;
-                self.updateDom(fadeSpeed);
+            this.currentTimeout = setTimeout(() => {
+                this.currentNotification = null;
+                this.currentTimeout = null;
+                this.updateDom(fadeSpeed);
             }, display_ms);
         }
 

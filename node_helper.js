@@ -1,8 +1,9 @@
-/* global require */
+'use strict';
 
 const _          = require('lodash');
 const NodeHelper = require('node_helper');
 const bodyParser = require('body-parser');
+const moment     = require('moment');
 
 var ajv = require('ajv')({
     allErrors: true,
@@ -47,13 +48,13 @@ module.exports = NodeHelper.create({
      * node_helper start method
      */
     start: function() {
-        console.log('[IFTTT] Starting node_helper');
+        this.log('Starting node_helper');
 
         this.expressApp.use(bodyParser.json());
         this.expressApp.use(bodyParser.urlencoded({extended: true}));
 
         this.expressApp.post('/IFTTT', (req, res) => {
-            console.error('[IFTTT] Incoming:', req.body);
+            this.log('Incoming:', req.body);
 
             this.validateNotification(req.body)
                 .then((data) => {
@@ -65,7 +66,7 @@ module.exports = NodeHelper.create({
                         });
                 })
                 .catch((err) => {
-                    console.error('[IFTTT] Validation Error: ' + err.message);
+                    this.log('Validation Error: ' + err.message);
 
                     res.status(400)
                         .send({
@@ -103,5 +104,17 @@ module.exports = NodeHelper.create({
                 }
             }
         });
+    },
+
+    /**
+     * Outputs log messages
+     *
+     * @param {String}  message
+     * @param {Boolean} [debug_only]
+     */
+    log: function (message, debug_only) {
+        if (!debug_only || (debug_only && this.config.debug)) {
+            console.log('[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] [MMM-IFTTT] ' + message);
+        }
     }
 });
