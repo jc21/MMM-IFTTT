@@ -8,7 +8,8 @@ Module.register('MMM-IFTTT',{
     defaults: {
         displaySeconds: 60,
         fadeSpeed: 3000,
-        size: 'large'
+        size: 'large',
+        debug: false
     },
 
     /**
