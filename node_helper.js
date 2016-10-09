@@ -13,6 +13,8 @@ var ajv = require('ajv')({
 
 module.exports = NodeHelper.create({
 
+    config: {},
+
     /**
      * The JSON Validation schema that a notification is checked against.
      */
@@ -78,6 +80,17 @@ module.exports = NodeHelper.create({
     },
 
     /**
+     *
+     * @param {String} notification
+     * @param {*}      payload
+     */
+    socketNotificationReceived: function (notification, payload) {
+        if (notification === 'START') {
+            this.config = payload;
+        }
+    },
+
+    /**
      * Checks the incoming notification against the validation schema
      *
      * @param   {Object} payload
@@ -113,7 +126,7 @@ module.exports = NodeHelper.create({
      * @param {Boolean} [debug_only]
      */
     log: function (message, debug_only) {
-        if (!debug_only || (debug_only && this.config.debug)) {
+        if (!debug_only || (debug_only && typeof this.config.debug !== 'undefined' && this.config.debug)) {
             console.log('[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] [MMM-IFTTT] ' + message);
         }
     }
