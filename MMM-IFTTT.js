@@ -36,7 +36,7 @@ Module.register('MMM-IFTTT',{
      */
     socketNotificationReceived: function(notification, payload) {
         if (notification === 'IFTTT_NOTIFICATION') {
-            var fadeSpeed = this.config.fadeSpeed;
+            let fadeSpeed = this.config.fadeSpeed;
             if (this.currentNotification && typeof this.currentNotification.fadeSpeed !== 'undefined') {
                 fadeSpeed = this.currentNotification.fadeSpeed;
             }
@@ -51,7 +51,7 @@ Module.register('MMM-IFTTT',{
      * @returns {*}
      */
     getDom: function() {
-        var message = '';
+        let message = '';
         if (this.currentNotification !== null) {
             message = this.currentNotification.message;
 
@@ -71,17 +71,18 @@ Module.register('MMM-IFTTT',{
             }
 
             // Message
-            var display_ms = (this.currentNotification.displaySeconds || this.defaults.displaySeconds) * 1000;
-            var fadeSpeed  = this.currentNotification.fadeSpeed || this.config.fadeSpeed;
+            let display_ms = (this.currentNotification.displaySeconds || this.defaults.displaySeconds) * 1000;
+            let fadeSpeed  = this.currentNotification.fadeSpeed || this.config.fadeSpeed;
 
             this.currentTimeout = setTimeout(() => {
-                this.currentNotification = null;
                 this.currentTimeout = null;
                 this.updateDom(fadeSpeed);
             }, display_ms);
+
+            this.currentNotification = null;
         }
 
-        var wrapper = document.createElement('div');
+        let wrapper = document.createElement('div');
         wrapper.className = 'thin bright ' + this.config.size;
         wrapper.appendChild(document.createTextNode(message));
 

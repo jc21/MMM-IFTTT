@@ -5,9 +5,9 @@ const NodeHelper = require('node_helper');
 const bodyParser = require('body-parser');
 const moment     = require('moment');
 
-var ajv = require('ajv')({
-    allErrors: true,
-    format:'full',
+let ajv = require('ajv')({
+    allErrors:   true,
+    format:      'full',
     coerceTypes: true
 });
 
@@ -19,27 +19,27 @@ module.exports = NodeHelper.create({
      * The JSON Validation schema that a notification is checked against.
      */
     notificationSchema: {
-        $schema: 'http://json-schema.org/draft-04/schema#',
-        id: 'notification',
+        $schema:  'http://json-schema.org/draft-04/schema#',
+        id:       'notification',
         required: ['message'],
         properties: {
             message: {
-                type: 'string',
+                type:      'string',
                 minLength: 1
             },
             displaySeconds: {
-                type: 'integer',
+                type:    'integer',
                 minimum: 1
             },
             size: {
                 type: 'string'
             },
             fadeSpeed: {
-                type: 'integer',
+                type:    'integer',
                 minimum: 1
             },
             lightSequence: {
-                type: 'string',
+                type:      'string',
                 minLength: 1,
                 maxLength: 255
             }
@@ -56,7 +56,7 @@ module.exports = NodeHelper.create({
         this.expressApp.use(bodyParser.urlencoded({extended: true}));
 
         this.expressApp.post('/IFTTT', (req, res) => {
-            this.log('Incoming:', req.body);
+            this.log('Incoming: ' + JSON.stringify(req.body), true);
 
             this.validateNotification(req.body)
                 .then((data) => {
@@ -101,18 +101,20 @@ module.exports = NodeHelper.create({
             if (!payload) {
                 reject(new Error('Payload is falsy'));
             } else {
+                let validate;
                 try {
-                    var validate = ajv.compile(this.notificationSchema);
+                    validate = ajv.compile(this.notificationSchema);
                 } catch (err) {
                     reject(err);
                 }
 
-                var valid = validate(payload);
+                let valid = validate(payload);
+
                 if (valid && !validate.errors) {
                     resolve(_.cloneDeep(payload));
                 } else {
-                    var message = ajv.errorsText(validate.errors);
-                    var final_error = new Error(message);
+                    let message = ajv.errorsText(validate.errors);
+                    let final_error = new Error(message);
                     reject(final_error);
                 }
             }
