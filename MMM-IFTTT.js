@@ -52,7 +52,7 @@ Module.register('MMM-IFTTT',{
      */
     getDom: function() {
         let message = '';
-		let msgsize = '';
+        let msgsize = '';
         if (this.currentNotification !== null) {
             message = this.currentNotification.message;
 
