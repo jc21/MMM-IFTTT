@@ -74,9 +74,9 @@ Module.register('MMM-IFTTT',{
             // Message
             let display_ms = (this.currentNotification.displaySeconds || this.defaults.displaySeconds) * 1000;
             let fadeSpeed  = this.currentNotification.fadeSpeed || this.config.fadeSpeed;
-            
-			// Sets the size of the text
-			msgsize = this.currentNotification.size || this.config.size;
+
+            // Sets the size of the text
+            msgsize = this.currentNotification.size || this.config.size;
 
             this.currentTimeout = setTimeout(() => {
                 this.currentTimeout = null;
