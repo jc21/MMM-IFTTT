@@ -52,6 +52,7 @@ Module.register('MMM-IFTTT',{
      */
     getDom: function() {
         let message = '';
+        let msgsize = '';
         if (this.currentNotification !== null) {
             message = this.currentNotification.message;
 
@@ -74,6 +75,9 @@ Module.register('MMM-IFTTT',{
             let display_ms = (this.currentNotification.displaySeconds || this.defaults.displaySeconds) * 1000;
             let fadeSpeed  = this.currentNotification.fadeSpeed || this.config.fadeSpeed;
 
+            // Sets the size of the text
+            msgsize = this.currentNotification.size || this.config.size;
+
             this.currentTimeout = setTimeout(() => {
                 this.currentTimeout = null;
                 this.updateDom(fadeSpeed);
@@ -83,7 +87,7 @@ Module.register('MMM-IFTTT',{
         }
 
         let wrapper = document.createElement('div');
-        wrapper.className = 'thin bright ' + this.config.size;
+        wrapper.className = 'thin bright ' + msgsize;
         wrapper.appendChild(document.createTextNode(message));
 
         return wrapper;
